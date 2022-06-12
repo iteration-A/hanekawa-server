@@ -15,7 +15,7 @@ class ChatRoomsController < ApplicationController
   end
 
   def show
-    chat_room = ChatRoom.preload([:messages]).find_by_topic!(params[:topic])
+    chat_room = ChatRoom.includes(:messages).find_by_topic!(params[:topic])
     render json: { chat_room: }, status: :ok
   end
 
