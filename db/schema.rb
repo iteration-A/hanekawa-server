@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_11_182053) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_053256) do
+  create_table "chat_rooms", force: :cascade do |t|
+    t.string "topic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic"], name: "index_chat_rooms_on_topic", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "password_digest", null: false
