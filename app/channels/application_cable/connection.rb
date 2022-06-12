@@ -8,16 +8,16 @@ module ApplicationCable
 
     private
 
-    def user_not_found
-      reject_unauthorized_connection
-    end
-
     def find_user
-      user = User.find(cookies.encrypted['_emma_session']['user_id'])
+      header = request.headers['Authorization']
+      header = header.split(' ').last if header
 
-      return user if user
-
-      reject_unauthorized_connection
+      payload = JsonWebToken.decode(header)
+      if (user = User.find_by_id(payload['user_id']))
+        user
+      else
+        reject_unauthorized_connection
+      end
     end
   end
 end
