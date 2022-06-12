@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :messages
+  has_many :chat_rooms, through: :messages
+
   FIELDS_TO_HIDE = [:password_digest].freeze
 
   validates :username,
