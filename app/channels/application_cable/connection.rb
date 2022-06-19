@@ -13,6 +13,9 @@ module ApplicationCable
       header = header.split(' ').last if header
 
       payload = JsonWebToken.decode(header)
+
+      reject_unauthorized_connection unless payload
+
       if (user = User.find_by_id(payload['user_id']))
         user
       else
