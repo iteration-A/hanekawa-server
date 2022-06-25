@@ -4,7 +4,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     stream_from @channel
     ActionCable.server.broadcast @channel, {
-      message: 'user_joined',
+      type: 'user_joined',
       data: {
         user: current_user.username
       }
@@ -13,7 +13,7 @@ class ChatRoomChannel < ApplicationCable::Channel
 
   def unsubscribed
     ActionCable.server.broadcast @channel, {
-      message: 'user_left',
+      type: 'user_left',
       data: {
         user: current_user.username
       }
@@ -25,12 +25,15 @@ class ChatRoomChannel < ApplicationCable::Channel
 
     if msg.save
       ActionCable.server.broadcast @channel, {
-        message: 'new_message',
-        data: msg
+        type: 'new_message',
+        data: {
+          content: msg.content,
+          username: User.find(msg.user_id).username
+        }
       }
     else
       transmit({
-                 message: 'bad_request',
+                 type: 'bad_request',
                  data: msg.errors
                })
     end
