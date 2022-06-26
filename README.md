@@ -1,24 +1,46 @@
-# README
+# Hanekawa' Server
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Routes
+| Route | Action |
+| ----- | ------ |
+| GET /chat_rooms | Gets all available Rooms|
+| POST /chat_rooms | Creates a new Room \*1 |
+| GET /chat_rooms/:topic | Gets a specific Room |
+| POST /sign-up | Creates a User \*2 |
+| POST /login | Gets a JWT for a given user \*3 |
+| WS /cable | Connects to Action Cable |
 
-Things you may want to cover:
+# Channels
+* ChatRoom
 
-* Ruby version
+# Examples
 
-* System dependencies
+*1 POST /chat_rooms:
+```json
+{
+    "chat_room": {
+        "topic": "ghost town"
+    }
+}
+```
 
-* Configuration
+*2 POST /sign-up
+```json
+{
+    "user": {
+        "username": "powy",
+        "password": "super_secret",
+        "password_confirmation": "super_secret"
+    }
+}
+```
 
-* Database creation
+*3 POST /login
+```json
+{
+  "username": "powy",
+  "password": "super_secret"
+}
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+<img width="2531" target="_blank" alt="hanekawa" src="https://raw.githubusercontent.com/iteration-A/hanekawa-server/master/hanekawa.png">
